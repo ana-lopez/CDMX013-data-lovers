@@ -159,10 +159,6 @@ femaleAndMan.forEach((value) => {
     } */
   })
 })
-console.log(genderMap.get("Female"));
-console.log(genderMap.get("Male"));
-console.log(genderMap.get("NA"));
-console.log(genderMap);
 
 let numberWoman = genderMap.get("Female");
 document.getElementById('pMujeres').innerHTML=numberWoman;
