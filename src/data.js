@@ -49,7 +49,7 @@ export function ascendingYears(jsonData) {
   })
   return recentMore;
 }
-  
+
 export function descendingYears(jsonData) {
   let old = jsonData.sort((a, b) => {
     if (parseInt(a.release_date) < parseInt(b.release_date)) {
@@ -62,11 +62,28 @@ export function descendingYears(jsonData) {
   return old;
 }
 
-export function filterby_genderPeople(jsonData) {
-  const allGenderPeople = jsonData.map(function(data) {
-    return data.people.map(function(data){
-      return data.gender;
-    });
+
+
+
+export function getStats(dataGhibli) {
+  let arrayWoman = [];
+  let arrayMen = [];
+  let arrayNA = [];
+  dataGhibli.forEach (x => {
+    x.people.forEach(y => {
+      if (y.gender == "Female") {
+        arrayWoman.push(y.gender);
+
+      } else if (y.gender == "Male") {
+        arrayMen.push(y.gender);
+      } else {
+        arrayNA.push(y.gender);
+      }
+    })
   })
-  return allGenderPeople;
-};
+  return {
+    males: arrayMen.length, 
+    females: arrayWoman.length,
+    others: arrayNA.length
+  }
+}

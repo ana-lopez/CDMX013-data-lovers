@@ -1,4 +1,4 @@
-import { filterByCategory, filmsGenders, dateFilter, ascendingOrder, descendingOrder, ascendingYears, descendingYears, filterby_genderPeople } from './data.js';
+import { filterByCategory, filmsGenders, dateFilter, ascendingOrder, descendingOrder, ascendingYears, descendingYears, getStats } from './data.js';
 import data from './data/ghibli/ghibli.js';
 
 const dataGhibli = data.films; //guarda el objeto en una variable
@@ -113,7 +113,8 @@ const closeModal = document.querySelector('#close');
 const openModal = document.querySelectorAll('.poster');
 
 openModal.forEach(poster => {
-  poster.addEventListener('click', (e) =>{ poster.classList.toggle('modal-close');
+  poster.addEventListener('click', (e) => {
+    poster.classList.toggle('modal-close');
     //e.preventDefault(); // sirve para quitar # de un nuevo URL
     //document.getElementById("mod").innerHTML = e.target.dataset.director + e.target.dataset.description;
     const infoModal = `<section class="infoContainer">
@@ -132,66 +133,20 @@ function toClose() {
   modalC.style.visibility = "hidden";
 }
 
-//comineza seccion grafica 
-const ctx = document.getElementById('myChart').getContext('2d');
 
-const femaleAndMan = filterby_genderPeople(dataGhibli);
-for (const value of femaleAndMan) {
-}; 
-//let sumHombres = 0;
-//let sumMujer = 0;
-
-let genderMap = new Map();
-femaleAndMan.forEach((value) => {
-  value.forEach((genders) => {
-    if(genderMap.has(genders)){ //verifca si tengo la llave
-      let genderAmount = genderMap.get(genders); //recupera el valor para la llave
-      genderAmount++; //incrementa el valor para la llave
-      genderMap.set(genders, genderAmount); //actualiza el valor de la llave
-    }else{
-      genderMap.set(genders, 0); //si no tengo la llave la agrego y le asigno el valor inicial de 0 
-    }
-   /* if(genders === "Female") {
-      sumMujer++;
-    }
-    if(genders === "Male"){
-      sumHombres++
-    } */
-  })
+window.addEventListener("hashchange", () => {
+  if (window.location.hash === "#containerGraf") {
+    showStats()
+  }else{
+    document.getElementById('stadistics').innerHTML = ''
+  } 
 })
 
-let numberWoman = genderMap.get("Female");
-document.getElementById('pMujeres').innerHTML=numberWoman;
-let numberMen = genderMap.get("Male");
-document.getElementById('pHombres').innerHTML=numberMen;
-let numberNa = genderMap.get("NA");
-document.getElementById('pnd').innerHTML=numberNa
-
-const myChart = new Chart(ctx, {
-    type: 'pie',
-    data: {
-        labels: ['female', 'male', 'na'],
-        datasets: [{
-            label: 'Rotten Tomatoes',
-            data: [numberWoman, numberMen, numberNa],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(153, 102, 255, 1)',
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-}); 
+function showStats() {
+  const stats = getStats(dataGhibli);
+  document.getElementById("all_movies").innerHTML = ''
+  document.getElementById('stadistics').innerHTML =
+    `<p>Los personajes femeninos son: ${stats.females}</p>
+     <p>Los personajes masculinos son: ${stats.males}</p>
+     <p>Los personajes No definidos son: ${stats.others}</p>`;
+}

@@ -8,6 +8,7 @@
 }
 
 body {
+    min-height: 100vh;
     background-image: linear-gradient(to top, #ebbba7 0%, #B9D3B0 50%);
  }
 
@@ -19,6 +20,7 @@ header {
     align-items: center;
     justify-content: space-between;
     position: fixed;
+    z-index: 10000;
 }
 
 header figure img{
@@ -68,13 +70,11 @@ header figure img{
 }
 
 .navbar ul li a .icon{
-    width: 60px;
+    width: 45px;
     display: inline-block;
     margin-top: -20px;
 }
 
-/*.navbar ul li a:hover,
-.navbar ul li a.a_parent.active,*/
 .navbar .dd_menu ul li a:hover,
 .navbar .dd_menu ul li a.active{
 	background: #81BDA4;
@@ -110,14 +110,12 @@ header figure img{
 	display: block;
 }
 
-
 #banner{
     width: 100%;
     height: 460px;
     background: center fixed url("images/castillo-banner.jpeg");
     background-size: cover;
     background-position: 0 650px;
-   
 }
 
 #all_movies{
@@ -143,6 +141,7 @@ header figure img{
 }
 
 .poster:hover{
+    border-color:#F88F79;
     transform: scale(1.1);
 }
 
@@ -200,6 +199,10 @@ header figure img{
 
 .modal_styles{
     font-weight: bold;
+}
+
+#stadistics{
+    text-align: center;
 }
 
 
